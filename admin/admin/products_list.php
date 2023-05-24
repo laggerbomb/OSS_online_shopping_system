@@ -35,14 +35,14 @@ if(isset($_GET['action']) && $_GET['action']!="")
         echo "Failed to retrieve image from the database.";
       }
 
-      /*this is delet query*/
+      /*this is delete query*/
       $delete_query = mysqli_query($con, "DELETE FROM products WHERE product_id='$product_id'");
       // Check if deletion was successful
       if ($delete_query && mysqli_affected_rows($con) > 0) {
         echo '<script>alert("Product deleted successfully!");</script>';
         echo '<script>
           setTimeout(function() {
-            window.location.href = "../admin/products_list.php";
+            window.location.href = "products_list.php";
           }, 2000); // 2000 milliseconds = 2 seconds
         </script>';
         exit();
@@ -50,9 +50,6 @@ if(isset($_GET['action']) && $_GET['action']!="")
       else {
         echo '<script>alert("Failed to delete product.");</script>';
       }
-  }
-  else if($_GET['action']=='update'){
-      echo '<script>alert("Update here now");</script>';
   }
 }
 
@@ -97,7 +94,7 @@ include "topheader.php";
                             <td style='width:20%;'><img src='../../product_images/$image' style='width:50px; height:50px; border:groove #000'>
                             </td style='width:40%;'><td>$product_name</td>
                             <td style='width:20%;'>$price</td>
-                            <td style='width:10%;'><a class=' btn btn-success' href='products_list.php?product_id=$product_id&action=update'>Update</a></td>
+                            <td style='width:10%;'><a class=' btn btn-success' href='update_products.php?product_id=$product_id''>Update</a></td>
                             <td style='width:10%;'><a class=' btn btn-danger' href='products_list.php?product_id=$product_id&action=delete'>Delete</a></td>
                           </tr>";
                         }

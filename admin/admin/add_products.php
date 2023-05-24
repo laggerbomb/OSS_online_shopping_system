@@ -21,14 +21,16 @@ if(isset($_POST['btn_save']))
 
   if($picture_type=="image/jpeg" || $picture_type=="image/jpg" || $picture_type=="image/png" || $picture_type=="image/gif")
   {
-    if($picture_size<=50000000)
-    
-      $pic_name=time()."_".$picture_name;
-      move_uploaded_file($picture_tmp_name,"../product_images/".$pic_name);
-      
-  mysqli_query($con,"insert into products (product_cat, product_brand,product_title,product_price, product_desc, product_image,product_keywords) values ('$product_type','$brand','$product_name','$price','$details','$pic_name','$tags')") or die ("query incorrect");
+    //picture less than 300MB
+    if($picture_size<=300000000){
+      move_uploaded_file($picture_tmp_name,"../../product_images/".$picture_name);
 
-  header("location: sumit_form.php?success=1");
+      mysqli_query($con,"insert into products (product_cat, product_brand,product_title,product_price, product_desc, product_image,product_keywords) values ('$product_type','$brand','$product_name','$price','$details','$picture_name','$tags')") or die ("query incorrect");
+      header("location: sumit_form.php?success=1");
+    }
+    else{
+      echo '<script>alert("Image Size too big");</script>';
+    }
   }
 
   mysqli_close($con);
