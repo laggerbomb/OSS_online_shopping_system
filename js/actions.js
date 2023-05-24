@@ -15,7 +15,6 @@ $(document).ready(function(){
 			data	:	{category:1},
 			success	:	function(data){
 				$("#get_category").html(data);
-				
 			}
 		})
 	}
