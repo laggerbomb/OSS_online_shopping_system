@@ -56,23 +56,19 @@ include "header.php";
 					<!-- Product main img -->
 					
 					<?php 
-								include 'db.php';
-								$product_id = $_GET['p'];
-								
-								$sql = " SELECT * FROM products ";
-								$sql = " SELECT * FROM products WHERE product_id = $product_id";
-								if (!$con) {
-									die("Connection failed: " . mysqli_connect_error());
-								}
-								$result = mysqli_query($con, $sql);
-								if (mysqli_num_rows($result) > 0) 
-								{
-									while($row = mysqli_fetch_assoc($result)) 
-									{
-									echo '
-									
-                                    
-                                
+						include 'db.php';
+						$product_id = $_GET['p'];
+						
+						$sql = " SELECT * FROM products WHERE product_id = $product_id";
+						if (!$con) {
+							die("Connection failed: " . mysqli_connect_error());
+						}
+						$result = mysqli_query($con, $sql);
+						if (mysqli_num_rows($result) > 0) 
+						{
+							while($row = mysqli_fetch_assoc($result)) 
+							{
+							echo '
                                 <div class="col-md-5 col-md-push-2">
                                 <div id="product-main-img">
                                     <div class="product-preview">
@@ -112,26 +108,20 @@ include "header.php";
                                     </div>
                                 </div>
                             </div>
-
-                                 
-									';
+						';
                                     
-									?>
-									<!-- FlexSlider -->
-									
-									<?php 
-									echo '
-									
-                                    
-                                   
+						?>
+						<!-- FlexSlider -->
+						
+				
                     <div class="col-md-5">
 						<div class="product-details">
-							<h2 class="product-name">'.$row['product_title'].'</h2>
+							<h2 class="product-name"><?php echo $row['product_title']; ?></h2>
 							<div>
-								<h3 class="product-price">$'.$row['product_price'].'</h3>
+								<h3 class="product-price">$<?php echo $row['product_price']; ?></h3>
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>'.$row['product_desc'].'</p>
+							<p><?php echo $row['product_desc']; ?></p>
 
 							<div class="add-to-cart">
 								<div class="btn-group" style="margin-left: 25px; margin-top: 15px">
@@ -141,8 +131,17 @@ include "header.php";
 
 							<ul class="product-links">
 								<li>Category:</li>
-								<li><a href="#">Headphones</a></li>
-								<li><a href="#">Accessories</a></li>
+								<?php
+								$sql = "SELECT cat_title FROM categories c
+									JOIN products p ON p.product_cat = c.cat_id
+									WHERE p.product_id = $product_id";
+								$result = mysqli_query($con, $sql);
+								
+								while ($row = mysqli_fetch_assoc($result)) {
+									$categoryName = $row['cat_title'];
+									echo '<li><a href="#">' . $categoryName . '</a></li>';
+								}
+								?>
 							</ul>
 
 							<ul class="product-links">
@@ -155,19 +154,6 @@ include "header.php";
 
 						</div>
 					</div>
-									
-					
-					<!-- /Product main img -->
-
-					<!-- Product thumb imgs -->
-					
-					
-					
-					<!-- /Product thumb imgs -->
-
-					<!-- Product details -->
-					
-					<!-- /Product details -->
 				</div>
 				<!-- /row -->
 			</div>
@@ -188,16 +174,17 @@ include "header.php";
 							
 						</div>
 					</div>
-                    ';
-									$_SESSION['product_id'] = $row['product_id'];
-									}
-								} 
-								?>	
-								<?php
-                    include 'db.php';
-								$product_id = $_GET['p'];
+					
+					<?php 
+							$_SESSION['product_id'] = $row['product_id'];
+						}
+					} 
+					?>	
+			<?php
+				include 'db.php';
+				$product_id = $_GET['p'];
                     
-					$product_query = "SELECT * FROM products,categories WHERE product_cat=cat_id AND product_id BETWEEN $product_id AND $product_id+3";
+				$product_query = "SELECT * FROM products,categories WHERE product_cat=cat_id AND product_id BETWEEN $product_id AND $product_id+3";
                 $run_query = mysqli_query($con,$product_query);
                 if(mysqli_num_rows($run_query) > 0){
 
@@ -212,48 +199,32 @@ include "header.php";
                         $cat_name = $row["cat_title"];
 
                         echo "
-				
-                        
-                                <div class='col-md-3 col-xs-6'>
-								<a href='product.php?p=$pro_id'><div class='product'>
-									<div class='product-img'>
-										<img src='product_images/$pro_image' style='max-height: 170px;' alt=''>
-									</div></a>
-									<div class='product-body'>
-										<p class='product-category'>$cat_name</p>
-										<h3 class='product-name header-cart-item-name'><a href='product.php?p=$pro_id'>$pro_title</a></h3>
-										<h4 class='product-price header-cart-item-info'>$$pro_price</h4>
-									</div>
-									<div class='add-to-cart'>
-										<button pid='$pro_id' id='product' class='add-to-cart-btn block2-btn-towishlist' href='#'><i class='fa fa-shopping-cart'></i> add to cart</button>
-									</div>
+							<div class='col-md-3 col-xs-6'>
+							<a href='product.php?p=$pro_id'><div class='product'>
+								<div class='product-img'>
+									<img src='product_images/$pro_image' style='max-height: 170px;' alt=''>
+								</div></a>
+								<div class='product-body'>
+									<p class='product-category'>$cat_name</p>
+									<h3 class='product-name header-cart-item-name'><a href='product.php?p=$pro_id'>$pro_title</a></h3>
+									<h4 class='product-price header-cart-item-info'>$$pro_price</h4>
 								</div>
-                                </div>
-							
-                        
-			";
-		}
-        ;
+								<div class='add-to-cart'>
+									<button pid='$pro_id' id='product' class='add-to-cart-btn block2-btn-towishlist' href='#'><i class='fa fa-shopping-cart'></i> add to cart</button>
+								</div>
+							</div>
+							</div>
+						";
+					};
       
-}
-?>
-					<!-- product -->
-					
-					<!-- /product -->
-
+				}
+			?>
 				</div>
 				<!-- /row -->
-                
 			</div>
 			<!-- /container -->
 		</div>
 		<!-- /Section -->
-
-		<!-- NEWSLETTER -->
-		
-		<!-- /NEWSLETTER -->
-
-		<!-- FOOTER -->
 <?php
 include "newslettter.php";
 include "footer.php";
