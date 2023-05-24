@@ -66,7 +66,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="products_list.php">
                         <i class="material-icons">list</i>
-                        <p>Product List</p>
+                        <p>Manage Product</p>
                         </a>
                         
                     </li>
