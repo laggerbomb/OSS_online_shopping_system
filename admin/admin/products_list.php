@@ -2,37 +2,70 @@
 session_start();
 include("../../db.php");
 error_reporting(0);
-if(isset($_GET['action']) && $_GET['action']!="" && $_GET['action']=='delete')
-{
-$product_id=$_GET['product_id'];
-///////picture delete/////////
-$result=mysqli_query($con,"select product_image from products where product_id='$product_id'")
-or die("query is incorrect...");
 
-list($picture)=mysqli_fetch_array($result);
-$path="../product_images/$picture";
-
-if(file_exists($path)==true)
+if(isset($_GET['action']) && $_GET['action']!="")
 {
-  unlink($path);
-}
-else
-{}
-/*this is delet query*/
-mysqli_query($con,"delete from products where product_id='$product_id'")or die("query is incorrect...");
+  $product_id=$_GET['product_id'];
+
+  //Delete Action Here
+  if($_GET['action']=='delete'){
+      ///////picture delete/////////
+      $query = "SELECT product_image FROM products WHERE product_id='$product_id'";
+      $result = mysqli_query($con, $query);
+
+      // Check if the query was successful
+      if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $picture = $row['product_image'];
+
+        // Construct the image path
+        $path = "../../product_images/$picture";
+
+        if (file_exists($path)) {
+          if (unlink($path)) {
+            echo 'Pleased wait while we redirect .....';
+          } else {
+            echo 'Failed to remove the image file.';
+          }
+        } else {
+          echo 'Image file does not exist.';
+        }
+      } 
+      else {
+        echo "Failed to retrieve image from the database.";
+      }
+
+      /*this is delet query*/
+      $delete_query = mysqli_query($con, "DELETE FROM products WHERE product_id='$product_id'");
+      // Check if deletion was successful
+      if ($delete_query && mysqli_affected_rows($con) > 0) {
+        echo '<script>alert("Product deleted successfully!");</script>';
+        echo '<script>
+          setTimeout(function() {
+            window.location.href = "../admin/products_list.php";
+          }, 2000); // 2000 milliseconds = 2 seconds
+        </script>';
+        exit();
+      } 
+      else {
+        echo '<script>alert("Failed to delete product.");</script>';
+      }
+  }
+  else if($_GET['action']=='update'){
+      echo '<script>alert("Update here now");</script>';
+  }
 }
 
 ///pagination
-
 $page=$_GET['page'];
 
 if($page=="" || $page=="1")
 {
-$page1=0;	
+  $page1=0;	
 }
 else
 {
-$page1=($page*10)-10;	
+  $page1=($page*10)-10;	
 } 
 include "sidenav.php";
 include "topheader.php";
@@ -40,8 +73,6 @@ include "topheader.php";
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-        
-        
          <div class="col-md-14">
             <div class="card ">
               <div class="card-header card-header-primary">
@@ -50,22 +81,25 @@ include "topheader.php";
               </div>
               <div class="card-body">
                 <div class="table-responsive ps">
-                  <table class="table tablesorter " id="page1">
+                  <table class="table tablesorter " id="page1" style='width:80%;'>
                     <thead class=" text-primary">
                       <tr><th>Image</th><th>Name</th><th>Price</th><th>
-	<a class=" btn btn-primary" href="add_products.php">Add New</a></th></tr></thead>
+	                      <a class=" btn btn-primary" href="add_products.php">Add New</a></th></tr></thead>
                     <tbody>
                       <?php 
 
-                        $result=mysqli_query($con,"select product_id,product_image, product_title,product_price from products  where  product_cat=2 or product_cat=3 or product_cat=4 Limit $page1,12")or die ("query 1 incorrect.....");
+                        $result=mysqli_query($con,"select product_id,product_image, product_title,product_price from products Limit $page1,10")or die ("query 1 incorrect.....");
 
                         while(list($product_id,$image,$product_name,$price)=mysqli_fetch_array($result))
                         {
-                        echo "<tr><td><img src='../../product_images/$image' style='width:50px; height:50px; border:groove #000'></td><td>$product_name</td>
-                        <td>$price</td>
-                        <td>
-                        <a class=' btn btn-success' href='clothes_list.php?product_id=$product_id&action=delete'>Delete</a>
-                        </td></tr>";
+                          echo "
+                          <tr>
+                            <td style='width:20%;'><img src='../../product_images/$image' style='width:50px; height:50px; border:groove #000'>
+                            </td style='width:40%;'><td>$product_name</td>
+                            <td style='width:20%;'>$price</td>
+                            <td style='width:10%;'><a class=' btn btn-success' href='products_list.php?product_id=$product_id&action=update'>Update</a></td>
+                            <td style='width:10%;'><a class=' btn btn-danger' href='products_list.php?product_id=$product_id&action=delete'>Delete</a></td>
+                          </tr>";
                         }
 
                         ?>
@@ -83,21 +117,20 @@ include "topheader.php";
                   </a>
                 </li>
                  <?php 
-//counting paging
+                  //counting paging
+                  $paging=mysqli_query($con,"select product_id,product_image, product_title,product_price from products");
+                  $count=mysqli_num_rows($paging);
 
-                $paging=mysqli_query($con,"select product_id,product_image, product_title,product_price from products");
-                $count=mysqli_num_rows($paging);
-
-                $a=$count/10;
-                $a=ceil($a);
-                
-                for($b=1; $b<=$a;$b++)
-                {
-                ?> 
-                <li class="page-item"><a class="page-link" href="productlist.php?page=<?php echo $b;?>"><?php echo $b." ";?></a></li>
-                <?php	
-}
-?>
+                  $a=$count/10;
+                  $a=ceil($a);
+                  
+                  for($b=1; $b<=$a;$b++)
+                  {
+                  ?> 
+                    <li class="page-item"><a class="page-link" href="products_list.php?page=<?php echo $b;?>"><?php echo $b." ";?></a></li>
+                  <?php	
+                  }
+                  ?>
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
@@ -106,12 +139,7 @@ include "topheader.php";
                 </li>
               </ul>
             </nav>
-            
-           
-
           </div>
-          
-          
         </div>
       </div>
       <?php

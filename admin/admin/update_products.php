@@ -74,7 +74,7 @@ include "topheader.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Pricing</label>
-                        <input type="number" id="price" name="price" required class="form-control" >
+                        <input type="text" id="price" name="price" required class="form-control" >
                       </div>
                     </div>
                   </div>
@@ -88,43 +88,19 @@ include "topheader.php";
                 <h5 class="title">Categories</h5>
               </div>
               <div class="card-body">
+                
                   <div class="row">
+                    
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Product Category</label>
-                          <select id="product_type" name="product_type" required class="form-control" 
-                            style="background-color:#212840; color: white;">
-                          <?php
-                          $query = "SELECT cat_id, cat_title FROM categories";
-                          $result = mysqli_query($con, $query);
-                          if ($result && mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                              $cat_id = $row['cat_id'];
-                              $cat_title = $row['cat_title'];
-                              echo '<option value="'. $cat_id .'">' . $cat_title . '</option>';
-                            }
-                          }
-                          ?>
-                        </select>
+                        <input type="number" id="product_type" name="product_type" required="[1-6]" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="">Product Brand</label>
-                        <select id="brand" name="brand" required class="form-control" 
-                            style="background-color:#212840; color: white;">
-                          <?php
-                          $query = "SELECT brand_id , brand_title  FROM brands";
-                          $result = mysqli_query($con, $query);
-                          if ($result && mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                              $brand_id = $row['brand_id'];
-                              $brand_title = $row['brand_title'];
-                              echo '<option value="'. $brand_id .'">' . $brand_title . '</option>';
-                            }
-                          }
-                          ?>
-                        </select>
+                        <input type="number" id="brand" name="brand" required class="form-control">
                       </div>
                     </div>
                      
