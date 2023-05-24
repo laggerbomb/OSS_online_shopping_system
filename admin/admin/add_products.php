@@ -8,7 +8,6 @@ if(isset($_POST['btn_save']))
   $product_name=$_POST['product_name'];
   $details=$_POST['details'];
   $price=$_POST['price'];
-  $c_price=$_POST['c_price'];
   $product_type=$_POST['product_type'];
   $brand=$_POST['brand'];
   $tags=$_POST['tags'];
@@ -43,8 +42,6 @@ include "topheader.php";
         <div class="container-fluid">
           <form action="" method="post" type="form" name="form" enctype="multipart/form-data">
           <div class="row">
-          
-                
          <div class="col-md-7">
             <div class="card">
               <div class="card-header card-header-primary">
