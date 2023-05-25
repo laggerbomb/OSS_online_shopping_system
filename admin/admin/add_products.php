@@ -24,8 +24,22 @@ if(isset($_POST['btn_save']))
     if ($picture_size <= 50000000){
       move_uploaded_file($picture_tmp_name,"../../product_images/".$picture_name);
 
-      mysqli_query($con,"insert into products (product_cat, product_brand,product_title,product_price, product_desc, product_image,product_keywords) values ('$product_type','$brand','$product_name','$price','$details','$picture_name','$tags')") or die ("query incorrect");
-      header("location: sumit_form.php?success=1");
+      //insert the details to database
+      $query = "INSERT INTO products 
+        (product_cat, product_brand, product_title, product_price, product_desc, product_image, product_keywords) 
+        VALUES ('$product_type', '$brand', '$product_name', '$price', '$details', '$picture_name', '$tags')";
+      $result = mysqli_query($con, $query);
+
+      if ($result) {
+        echo '<script>alert("Product Added successfully!");</script>';
+        //redirect back to menu
+        echo "<script>window.location.href = 'products_list.php';</script>";
+        exit();
+      } 
+      else {
+        // Display the error message
+        echo '<script>alert("Error: ' . $con->error . '");</script>';
+      }
     }
     else{
       echo '<script>alert("Image Size too big");</script>';
