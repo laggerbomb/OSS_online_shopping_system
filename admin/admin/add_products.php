@@ -20,8 +20,8 @@ if(isset($_POST['btn_save']))
 
   if($picture_type=="image/jpeg" || $picture_type=="image/jpg" || $picture_type=="image/png" || $picture_type=="image/gif")
   {
-    //picture less than 300MB
-    if($picture_size<=300000000){
+    // Picture less than 50MB
+    if ($picture_size <= 50000000){
       move_uploaded_file($picture_tmp_name,"../../product_images/".$picture_name);
 
       mysqli_query($con,"insert into products (product_cat, product_brand,product_title,product_price, product_desc, product_image,product_keywords) values ('$product_type','$brand','$product_name','$price','$details','$picture_name','$tags')") or die ("query incorrect");
