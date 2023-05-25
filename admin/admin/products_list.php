@@ -46,10 +46,12 @@ if(isset($_GET['action']) && $_GET['action']!="")
       // Check if the queries ran successfully or failed
       if ($result_order && $result_product) {
         echo '<script>alert("Product deleted successfully!");</script>';
+        //redirect user back to product list after deletion
+        // 2000 milliseconds = 2 seconds
         echo '<script>
         setTimeout(function() {
         window.location.href = "products_list.php";
-        }, 2000); // 2000 milliseconds = 2 seconds
+        }, 2000); 
         </script>';
         exit();
       } 
