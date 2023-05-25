@@ -40,25 +40,25 @@ include "topheader.php";
                         <div class="col-md-12 ">
                             <div class="form-group">
                                 <label>First name</label>
-                                <input type="text" id="first_name" name="first_name" class="form-control" value="<?php echo $first_name; ?>" >
+                                <input type="text" id="first_name" name="first_name" class="form-control" value="<?php echo $first_name; ?>" required>
                             </div>
                         </div>
                         <div class="col-md-12 ">
                             <div class="form-group">
                                 <label>Last name</label>
-                                <input type="text" id="last_name" name="last_name" class="form-control" value="<?php echo $last_name; ?>" >
+                                <input type="text" id="last_name" name="last_name" class="form-control" value="<?php echo $last_name; ?>" required>
                             </div>
                         </div>
                         <div class="col-md-12 ">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>">
+                                <input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>"required>
                             </div>
                         </div>
                         <div class="col-md-12 ">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="text" name="password" id="password" class="form-control" value="<?php echo $user_password; ?>">
+                                <input type="text" name="password" id="password" class="form-control" value="<?php echo $user_password; ?>"required>
                             </div>
                         </div>
                     </div>
