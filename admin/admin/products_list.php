@@ -35,20 +35,27 @@ if(isset($_GET['action']) && $_GET['action']!="")
         echo "Failed to retrieve image from the database.";
       }
 
-      /*this is delete query*/
-      $delete_query = mysqli_query($con, "DELETE FROM products WHERE product_id='$product_id'");
-      // Check if deletion was successful
-      if ($delete_query && mysqli_affected_rows($con) > 0) {
+      // Step 1: Delete from the child table (order_products)
+      $delete_order_query = "DELETE FROM order_products WHERE product_id = '$product_id'";
+      $result_order = mysqli_query($con, $delete_order_query);
+
+      // Step 2: Delete from the parent table (products)
+      $delete_product_query = "DELETE FROM products WHERE product_id = '$product_id'";
+      $result_product = mysqli_query($con, $delete_product_query);
+
+      // Check if the queries ran successfully or failed
+      if ($result_order && $result_product) {
         echo '<script>alert("Product deleted successfully!");</script>';
         echo '<script>
-          setTimeout(function() {
-            window.location.href = "products_list.php";
-          }, 2000); // 2000 milliseconds = 2 seconds
+        setTimeout(function() {
+        window.location.href = "products_list.php";
+        }, 2000); // 2000 milliseconds = 2 seconds
         </script>';
         exit();
       } 
       else {
-        echo '<script>alert("Failed to delete product.");</script>';
+        $error_message = $con->error;
+        echo "<script>alert('Deletion failed. Error: $error_message');</script>";
       }
   }
 }
