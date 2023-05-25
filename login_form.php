@@ -26,39 +26,33 @@ if (isset($_POST["login_user_with_product"])) {
 						
 						<!-- /Billing Details -->
 						
-						
 								<form onsubmit="return false" id="login" class="login100-form ">
 									<div class="billing-details jumbotron">
                                     <div class="section-title">
-                                        <h2 class="login100-form-title p-b-49" >Login Here</h2>
+                                        <h2 class="login100-form-title p-b-49" >User Login</h2>
                                     </div>
                                    
                                     
                                     <div class="form-group">
-                                       <label for="email">Email</label>
-                                        <input class="input input-borders" type="email" name="email" placeholder="Email" id="password" required>
+                                       <label for="email">Email Address *</label>
+                                        <input class="input input-borders" type="email" name="email" placeholder="" id="password" required>
                                     </div>
                                     
                                     <div class="form-group">
-                                       <label for="email">Password</label>
-                                        <input class="input input-borders" type="password" name="password" placeholder="password" id="password" required>
+                                       <label for="email">Password *</label>
+                                        <input class="input input-borders" type="password" name="password" placeholder="" id="password" required>
                                     </div>
                                     
-                                    <div class="text-pad" >
-                                       <a href="#">
-                                           forget password ?
-                                       </a>
-                                        
+                                    <div class="forget" >
+									<p style="font-size:small">Forget <b><a href="#" style="color:blue">Password?</a></b></p>
                                     </div>
+									
+									<dic class="signin">
                                     
-                                        <input class="primary-btn btn-block"   type="submit"  Value="Login">
-                                        
-                                        <div class="panel-footer"><div class="alert alert-danger"><h4 id="e_msg"></h4></div></div>
-                                    
-                                    	
-                                        
-                                    
+                                        <input class="primary-btn btn-block" style="background-color:#2690D9"  type="submit"  Value="Login">
 
+                                    </div>
+									<div class="panel-footer"><div class="alert alert-danger"><h4 id="e_msg"></h4></div></div>
                                 </div>
                                 
 								</form>
