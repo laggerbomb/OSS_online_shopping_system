@@ -44,7 +44,7 @@ if (isset($_POST["login_user_with_product"])) {
                                     </div>
                                     
                                     <div class="forget" >
-									<p style="font-size:small">Forget <b><a href="#" style="color:blue">Password?</a></b></p>
+									<p style="font-size:small">Forget <b><a href="forgot_password.php" style="color:blue">Password?</a></b></p>
                                     </div>
 									
 									<dic class="signin">
