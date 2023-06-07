@@ -12,6 +12,7 @@ session_start()
 <!------ Include the above in your HEAD tag ---------->
 
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+ <br><br><br><br><br>
  <div class="form-gap"></div>
 <div class="container">
 	<div class="row">
@@ -29,7 +30,7 @@ session_start()
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
+                          <input id="email" name="email" placeholder="Email Address" class="form-control"  type="email">
                         </div>
                       </div>
                       <div class="form-group">
@@ -37,6 +38,11 @@ session_start()
                       </div>
                       
                       <input type="hidden" class="hide" name="token" id="token" value=""> 
+<hr>
+                      <div class="forget" >
+									<a href="index.php" style="color:blue">Back</a></p>
+                                    </div>
+
                     </form>
     
                   </div>

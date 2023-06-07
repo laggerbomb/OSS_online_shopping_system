@@ -26,7 +26,8 @@
                     <div class="signin-image">
                         <figure><img src="./assets/images/signup-image.jpg" alt="sing up image"></figure>
                         <a href="../index.php" class="signup-image-link">Back To Home</a>
-                        
+                        <br>
+                        <a href="reg.php" class="signup-image-link">Register</a>
                         
                     </div>
 
